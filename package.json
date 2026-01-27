@@ -10,7 +10,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "type-check": "tsc --noEmit",
-    "deploy": "bun run build; python3 ./node_modules/deploy/main.py deploy.yaml"
+    "deploy": "bun run build; python3 ./node_modules/deploy/main.py --config deploy.yaml"
   },
   "dependencies": {
     "next": "^14.2.0",
