@@ -1,0 +1,32 @@
+{
+  "name": "nextjs-template-repo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "type-check": "tsc --noEmit",
+    "deploy": "python3 ./node_modules/deploy/main.py deploy.yaml"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/jest": "^29.5.0",
+    "typescript": "^5.5.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@testing-library/react": "^15.0.0",
+    "@testing-library/jest-dom": "^6.4.0",
+    "deploy": "https://github.com/fan-Pier-Labs/deploy"
+  }
+}
