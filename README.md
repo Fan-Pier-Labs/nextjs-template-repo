@@ -34,7 +34,7 @@ bun install
 # Run the development server
 bun run dev
 
-# Open http://localhost:3000
+# Open http://localhost:8080
 ```
 
 ## 🛠️ Development Setup
@@ -95,7 +95,7 @@ The included `Dockerfile` is optimized for production:
 docker build -t nextjs-app .
 
 # Run the container
-docker run -p 3000:3000 nextjs-app
+docker run -p 8080:8080 nextjs-app
 ```
 
 **Features:**

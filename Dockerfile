@@ -1,41 +1,30 @@
 # Production Dockerfile for Next.js with Bun
-FROM oven/bun:latest AS base
+# TODO: Consider using multi-stage build to speed up build times:
+#   - Stage 1: Install dependencies (cached separately)
+#   - Stage 2: Build application
+#   - Stage 3: Copy only production files to minimal final image
+FROM oven/bun:latest
 
-# Install dependencies only when needed
-FROM base AS deps
 WORKDIR /app
 
-# Copy package files
+# Copy package files and install dependencies
 COPY package.json bun.lockb* ./
 RUN bun install --frozen-lockfile
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Copy source code and build
 COPY . .
-
-# Build the application
 RUN bun run build
 
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
-
+# Set environment variables
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 ENV HOSTNAME="0.0.0.0"
 
-# Copy the standalone build
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-
-EXPOSE 3000
+EXPOSE 8080
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD bun -e "fetch('http://localhost:3000/api/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"
+  CMD bun -e "fetch('http://localhost:8080/api/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"
 
 # Production: run the application
 CMD ["bun", "run", "server.js"]
